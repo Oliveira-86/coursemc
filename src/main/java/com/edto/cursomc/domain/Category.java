@@ -19,9 +19,9 @@ public class Category implements Serializable{
 	public Category() {
 	}
 
-	public Category(Integer id, String name) {
+	public Category(int i, String name) {
 		super();
-		this.id = id;
+		this.id = i;
 		this.name = name;
 	}
 
