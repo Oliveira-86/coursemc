@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.edto.cursomc.domain.Category;
 import com.edto.cursomc.repositories.CategoryRepository;
+import com.edto.cursomc.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryService {
@@ -22,6 +23,6 @@ public class CategoryService {
 	
 	public Category findbyId(Integer id) {
 		Optional<Category> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 }
