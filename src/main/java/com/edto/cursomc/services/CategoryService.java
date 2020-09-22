@@ -21,7 +21,7 @@ public class CategoryService {
 		return list;
 	}
 	
-	public Category findbyId(Integer id) {
+	public Category findbyId(Long id) {
 		Optional<Category> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}

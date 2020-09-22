@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.edto.cursomc.domain.Address;
 import com.edto.cursomc.domain.Category;
 import com.edto.cursomc.domain.City;
+import com.edto.cursomc.domain.Client;
 import com.edto.cursomc.domain.Product;
 import com.edto.cursomc.domain.State;
+import com.edto.cursomc.domain.enums.ClientType;
+import com.edto.cursomc.repositories.AddressRepository;
 import com.edto.cursomc.repositories.CategoryRepository;
 import com.edto.cursomc.repositories.CityRepository;
+import com.edto.cursomc.repositories.ClientRepository;
 import com.edto.cursomc.repositories.ProductRepository;
 import com.edto.cursomc.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private StateRepository stateRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -70,6 +81,21 @@ public class CursomcApplication implements CommandLineRunner {
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		
+		Client cl1 = new Client(null, "Maria Silva", "maria@gmail.com", "00987856432" ,ClientType.PHYSICALPERSON);
+		
+		cl1.getPhone().addAll(Arrays.asList("999923388", "982983746"));
+		
+		Address add1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "54389098", cl1, cit1);
+		Address add2 = new Address(null, "Avenida Matos", "400", "Sala 800", "Centro", "23490847", cl1, cit2);
+		
+		cl1.getAddress().addAll(Arrays.asList(add1, add2));
+		
+		clientRepository.saveAll(Arrays.asList(cl1));
+		addressRepository.saveAll(Arrays.asList(add1, add2));
 	}
 
 }
+
+/*
+ * Salvamos primeiro sempre quem é independente.
+ */

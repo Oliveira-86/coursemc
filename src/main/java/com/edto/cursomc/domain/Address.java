@@ -24,13 +24,17 @@ public class Address implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "Client_id")
-	private Client clients;
+	private Client client;
+	
+	@ManyToOne
+	@JoinColumn(name = "City_id")
+	private City city;
 	
 	public Address() {
 	}
 
 	public Address(Long id, String publicPlace, String number, String complement, String neighborhood, String zipCode,
-			Client clients) {
+			Client client, City city) {
 		super();
 		this.id = id;
 		this.publicPlace = publicPlace;
@@ -38,7 +42,8 @@ public class Address implements Serializable{
 		this.complement = complement;
 		this.neighborhood = neighborhood;
 		this.zipCode = zipCode;
-		this.clients = clients;
+		this.client = client;
+		this.city = city;
 	}
 
 	public Long getId() {
@@ -89,12 +94,20 @@ public class Address implements Serializable{
 		this.zipCode = zipCode;
 	}
 
-	public Client getClients() {
-		return clients;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setClients(Client clients) {
-		this.clients = clients;
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override
@@ -121,4 +134,6 @@ public class Address implements Serializable{
 			return false;
 		return true;
 	}
+
+
 }
