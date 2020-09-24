@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.edto.cursomc.domain.Category;
 import com.edto.cursomc.repositories.CategoryRepository;
+import com.edto.cursomc.services.exceptions.DataIntegrityException;
 import com.edto.cursomc.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -33,5 +35,16 @@ public class CategoryService {
 	public Category update(Category obj) {
 		findById(obj.getId());
 		return repository.save(obj);
+	}
+	
+	public void delete(Long id) {
+		findById(id); 
+		try {
+			repository.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e){
+			throw new DataIntegrityException(" Is not possible delete Category with Product");
+		}
+		
 	}
 }
