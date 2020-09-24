@@ -1,7 +1,7 @@
 package com.edto.cursomc.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,33 +11,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Instant date;
+	private Date date;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
 	@ManyToOne
-	@JoinColumn(name = "Client_id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 	
+	@ManyToOne
+	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
 	
 	public Order() {
 	}
 
-	public Order(Long id, Instant date, Payment payment, Client client, Address deliveryAddress) {
+	public Order(Long id, Date date, Client client, Address deliveryAddress) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.payment = payment;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
 	}
@@ -50,11 +53,11 @@ public class Order implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Instant date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

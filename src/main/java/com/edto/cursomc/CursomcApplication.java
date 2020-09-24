@@ -1,5 +1,6 @@
 package com.edto.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.edto.cursomc.domain.Address;
+import com.edto.cursomc.domain.BoletoPayment;
+import com.edto.cursomc.domain.CardPayment;
 import com.edto.cursomc.domain.Category;
 import com.edto.cursomc.domain.City;
 import com.edto.cursomc.domain.Client;
+import com.edto.cursomc.domain.Order;
+import com.edto.cursomc.domain.Payment;
 import com.edto.cursomc.domain.Product;
 import com.edto.cursomc.domain.State;
 import com.edto.cursomc.domain.enums.ClientType;
+import com.edto.cursomc.domain.enums.PaymentStatus;
 import com.edto.cursomc.repositories.AddressRepository;
 import com.edto.cursomc.repositories.CategoryRepository;
 import com.edto.cursomc.repositories.CityRepository;
 import com.edto.cursomc.repositories.ClientRepository;
+import com.edto.cursomc.repositories.OrderRepository;
+import com.edto.cursomc.repositories.PaymentRepository;
 import com.edto.cursomc.repositories.ProductRepository;
 import com.edto.cursomc.repositories.StateRepository;
 
@@ -41,6 +49,13 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -92,10 +107,26 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(cl1));
 		addressRepository.saveAll(Arrays.asList(add1, add2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Order o1 = new Order(null, sdf.parse("23/09/2020 00:01"), cl1, add1);
+		Order o2 = new Order(null, sdf.parse("19/10/2020 12:34"), cl1, add2);
+		
+		Payment pay1 = new CardPayment(null, PaymentStatus.PENDING, o1, 6);
+		o1.setPayment(pay1);
+		
+		Payment pay2 = new BoletoPayment(null, PaymentStatus.PAID, o2, sdf.parse("21/09/2020 13:50"), sdf.parse("23/09/2020 15:00"));
+		o2.setPayment(pay2);
+		
+		cl1.getOrders().addAll(Arrays.asList(o1, o2)); 
+		
+		orderRepository.saveAll(Arrays.asList(o1, o2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 
 }
 
 /*
- * Salvamos primeiro sempre quem é independente.
+ * Salvamos primeiro sempre quem é independente. Exemplo, salvar primeiro o pedido e depois os pagamentos.
  */

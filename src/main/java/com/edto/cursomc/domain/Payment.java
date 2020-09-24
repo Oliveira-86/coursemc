@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -11,12 +13,13 @@ import javax.persistence.OneToOne;
 import com.edto.cursomc.domain.enums.PaymentStatus;
 
 @Entity
-public class Payment implements Serializable{
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Long id;
-	private PaymentStatus status; 
+	private Integer status; 
 	
 	@OneToOne
 	@JoinColumn(name = "order_id")
@@ -29,7 +32,7 @@ public class Payment implements Serializable{
 	public Payment(Long id, PaymentStatus status, Order order) {
 		super();
 		this.id = id;
-		this.status = status;
+		this.status = status.getCod();
 		this.order = order;
 	}
 
@@ -42,11 +45,11 @@ public class Payment implements Serializable{
 	}
 
 	public PaymentStatus getStatus() {
-		return status;
+		return PaymentStatus.toEnum(status);
 	}
 
 	public void setStatus(PaymentStatus status) {
-		this.status = status;
+		this.status = status.getCod();
 	}
 
 	public Order getOrder() {
@@ -84,3 +87,10 @@ public class Payment implements Serializable{
 	
 	
 }
+
+/*
+ * @Inheritance(strategy = InheritanceType.JOINED) --> Annotation associada a superclasse e a estratégia usada para gerar a tbela no banco de dados,
+ * tem duas estrategias a tabela unica ou uma tabela para cada classe. Nesse caso usamos a tabela única(JOINED).
+ * 
+ * public abstract class Payment implements Serializable --> para que essa classe nunca seja instanciada e sim suas subclasses.
+ */
