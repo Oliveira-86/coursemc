@@ -21,12 +21,17 @@ public class CategoryService {
 		return list;
 	}
 	
-	public Category findbyId(Long id) {
+	public Category findById(Long id) {
 		Optional<Category> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Category insert(Category obj) {
+		return repository.save(obj);
+	}
+
+	public Category update(Category obj) {
+		findById(obj.getId());
 		return repository.save(obj);
 	}
 }
