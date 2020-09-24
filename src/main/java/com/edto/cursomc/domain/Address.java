@@ -26,11 +26,11 @@ public class Address implements Serializable{
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "Client_id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 	
 	@ManyToOne
-	@JoinColumn(name = "City_id")
+	@JoinColumn(name = "city_id")
 	private City city;
 	
 	public Address() {
