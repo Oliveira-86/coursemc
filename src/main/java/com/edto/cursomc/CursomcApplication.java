@@ -15,6 +15,7 @@ import com.edto.cursomc.domain.Category;
 import com.edto.cursomc.domain.City;
 import com.edto.cursomc.domain.Client;
 import com.edto.cursomc.domain.Order;
+import com.edto.cursomc.domain.OrderItem;
 import com.edto.cursomc.domain.Payment;
 import com.edto.cursomc.domain.Product;
 import com.edto.cursomc.domain.State;
@@ -24,6 +25,7 @@ import com.edto.cursomc.repositories.AddressRepository;
 import com.edto.cursomc.repositories.CategoryRepository;
 import com.edto.cursomc.repositories.CityRepository;
 import com.edto.cursomc.repositories.ClientRepository;
+import com.edto.cursomc.repositories.OrderItemRepository;
 import com.edto.cursomc.repositories.OrderRepository;
 import com.edto.cursomc.repositories.PaymentRepository;
 import com.edto.cursomc.repositories.ProductRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	
 	public static void main(String[] args) {
@@ -123,6 +128,19 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(o1, o2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		OrderItem oi1 = new OrderItem(p1, o1, 0.00, 1, 2000.00);
+		OrderItem oi2 = new OrderItem(p3, o1, 0.00, 2, 80.00);
+		OrderItem oi3 = new OrderItem(p2, o2, 100.0, 1, 800.00);
+		
+		o1.getItems().addAll(Arrays.asList(oi1, oi2));
+		o2.getItems().addAll(Arrays.asList(oi3));
+		
+		p1.getItems().addAll(Arrays.asList(oi1));
+		p2.getItems().addAll(Arrays.asList(oi3));
+		p3.getItems().addAll(Arrays.asList(oi2));
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
 	}
 
 }
