@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.edto.cursomc.domain.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -21,6 +22,7 @@ public abstract class Payment implements Serializable{
 	private Long id;
 	private Integer status; 
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	@MapsId
