@@ -43,7 +43,7 @@ public class CategoryService {
 			repository.deleteById(id);
 		}
 		catch(DataIntegrityViolationException e){
-			throw new DataIntegrityException(" Is not possible delete Category with Product");
+			throw new DataIntegrityException("Is not possible delete Category with Product");
 		}
 		
 	}
