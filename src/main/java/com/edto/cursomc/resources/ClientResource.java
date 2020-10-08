@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edto.cursomc.domain.Client;
 import com.edto.cursomc.dto.ClientDTO;
+import com.edto.cursomc.dto.ClientNewDTO;
 import com.edto.cursomc.services.ClientService;
 
 @RestController
@@ -45,7 +46,7 @@ public class ClientResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto) {
 		Client obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
