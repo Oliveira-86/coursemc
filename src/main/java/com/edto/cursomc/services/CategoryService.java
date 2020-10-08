@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.edto.cursomc.domain.Category;
+import com.edto.cursomc.domain.Client;
 import com.edto.cursomc.dto.CategoryDTO;
 import com.edto.cursomc.repositories.CategoryRepository;
 import com.edto.cursomc.services.exceptions.DataIntegrityException;
@@ -37,8 +38,9 @@ public class CategoryService {
 	}
 
 	public Category update(Category obj) {
-		findById(obj.getId());
-		return repository.save(obj);
+		Category newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 	
 	public void delete(Long id) {
@@ -58,5 +60,9 @@ public class CategoryService {
 	
 	public Category fromDTO(CategoryDTO objDto) {
 		return new Category(objDto.getId(), objDto.getName());
+	}
+	
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
 	}
 }
