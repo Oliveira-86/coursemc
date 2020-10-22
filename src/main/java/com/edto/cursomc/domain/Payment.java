@@ -91,7 +91,7 @@ public abstract class Payment implements Serializable{
 }
 
 /*
- * @Inheritance(strategy = InheritanceType.JOINED) --> Annotation associada a superclasse e a estratégia usada para gerar a tbela no banco de dados,
+ * @Inheritance(strategy = InheritanceType.JOINED) --> Annotation associada a superclasse e a estratégia usada para gerar a tabela no banco de dados,
  * tem duas estrategias a tabela unica ou uma tabela para cada classe. Nesse caso usamos a tabela única(JOINED).
  * 
  * public abstract class Payment implements Serializable --> para que essa classe nunca seja instanciada e sim suas subclasses.

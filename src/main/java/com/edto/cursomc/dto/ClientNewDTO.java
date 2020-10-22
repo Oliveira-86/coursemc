@@ -121,12 +121,12 @@ public class ClientNewDTO implements Serializable{
 		this.phone3 = phone3;
 	}
 
-	public Long getCidadeId() {
-		return cidadeId;
+	public Long getCityId() {
+		return cityId;
 	}
 
-	public void setCidadeId(Long cidadeId) {
-		this.cidadeId = cidadeId;
+	public void setCityId(Long cidadeId) {
+		this.cityId = cidadeId;
 	}
 
 	
