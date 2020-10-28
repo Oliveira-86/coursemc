@@ -8,16 +8,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.Length;
 
 import com.edto.cursomc.domain.enums.ClientType;
 
@@ -28,13 +25,9 @@ public class Client implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotEmpty(message="Mandatory")
-	@Length(min=5, max=80, message="The length must be between 5 and 80 characters")
 	private String name;
 	
-	@NotEmpty(message="Mandatory")
-	@Email(message="Invalid Email")
+	@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer type; 
