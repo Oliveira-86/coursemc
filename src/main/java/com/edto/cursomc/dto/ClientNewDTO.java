@@ -2,22 +2,44 @@ package com.edto.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 public class ClientNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Mandatory")
+	@Length(min=5, max=80, message="The length must be between 5 and 80 characters")
 	private String name;
+	
+	@NotEmpty(message="Mandatory")
+	@Email(message="Invalid Email")
 	private String email;
+	
+	@NotEmpty(message="Mandatory")
 	private String cpfOuCnpj;
 	private Integer type;
 	
+	@NotEmpty(message="Mandatory")
 	private String publicPlace;
+	
+	@NotEmpty(message="Mandatory")
 	private String number;
+	
 	private String complement;
+	
 	private String neighborhood;
+	
+	@NotEmpty(message="Mandatory")
 	private String zipCode;
 	
+	@NotEmpty(message="Mandatory")
 	private String phone1;
+	
 	private String phone2;
+	
 	private String phone3;
 	
 	private Long cityId;
