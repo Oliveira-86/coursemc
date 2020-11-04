@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.edto.cursomc.domain.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Client implements Serializable{
@@ -32,6 +33,7 @@ public class Client implements Serializable{
 	private String cpfOuCnpj;
 	private Integer type; 
 	
+	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -39,7 +41,7 @@ public class Client implements Serializable{
 	@CollectionTable(name = "PHONE")
 	private Set<String> phone = new HashSet<>();
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> Orders = new ArrayList<>();
 	

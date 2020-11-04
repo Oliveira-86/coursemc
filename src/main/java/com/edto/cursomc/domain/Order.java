@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_order")
@@ -31,15 +30,16 @@ public class Order implements Serializable{
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date date;
 	
+	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
@@ -56,6 +56,14 @@ public class Order implements Serializable{
 		this.date = date;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+	}
+	
+	public Double getTotalValue() {
+		double sum = 0.0;
+		for (OrderItem oi : items) {
+			sum = sum + oi.getSubTotal();
+		}
+		return sum;
 	}
 
 	public Long getId() {
