@@ -35,9 +35,17 @@ public class OrderItem implements Serializable{
 		return (price - discount) * quantity;
 	}
 	
+	public void setOrder(Order order) {
+		id.setOrder(order);
+	}
+	
 	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
 	}
   
 	public Product getProduct() {

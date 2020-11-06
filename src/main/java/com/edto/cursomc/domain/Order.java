@@ -34,7 +34,7 @@ public class Order implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
-
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
