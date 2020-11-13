@@ -25,6 +25,7 @@ public class ClientInsertValidator implements ConstraintValidator<ClientInsert, 
 	public void initialize(ClientInsert ann) {
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
 		
