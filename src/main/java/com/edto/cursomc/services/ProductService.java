@@ -24,19 +24,15 @@ public class ProductService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	public List<Product> findAll() {
-		List<Product> list = repository.findAll();
-		return list;
-	}
-	
 	public Product findbyId(Long id) {
 		Optional<Product> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException(
+				"Object Not Found! Id: " + id + ", Typo: " + Product.class.getName()));
 	}
 	
 	public Page<Product> search(String name, List<Long> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Category> categories = categoryRepository.findAllById(ids);
-		return repository.search(name, categories, pageRequest);
+		return repository.findDistinctByNameContainingAndCategoriesIn(name, categories, pageRequest);
 	}
 }

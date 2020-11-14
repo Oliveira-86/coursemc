@@ -17,6 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	@Transactional(readOnly=true)
 	@Query("SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categories cat WHERE obj.name LIKE %:name% AND cat IN :categories")
-	Page<Product> search(String name, List<Category> categories, Pageable pageRequest);
+	Page<Product> findDistinctByNameContainingAndCategoriesIn(String name, List<Category> categories, Pageable pageRequest);
 
 }
