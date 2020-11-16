@@ -42,12 +42,12 @@ public class OrderService {
 	@Transactional
 	public Order insert(Order obj) {
 		obj.setId(null);
-		obj.setDate(new Date());;
+		obj.setInstante(new Date());;
 		obj.getPayment().setStatus(PaymentStatus.PENDING);
 		obj.getPayment().setOrder(obj);
 		if (obj.getPayment() instanceof BoletoPayment) {
 			BoletoPayment pagto = (BoletoPayment) obj.getPayment();
-			boletoService.preencherPagamentoComBoleto(pagto, obj.getDate());
+			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		obj = repository.save(obj);
 		paymentRepository.save(obj.getPayment());
@@ -57,6 +57,7 @@ public class OrderService {
 			ip.setOrder(obj);
 		}
 		orderItemRepository.saveAll(obj.getItems());
+		System.out.println(obj);
 		return obj;
 	}
 }

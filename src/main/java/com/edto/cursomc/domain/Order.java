@@ -1,8 +1,10 @@
 package com.edto.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,7 +30,7 @@ public class Order implements Serializable{
 	private Long id;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date date;
+	private Date instante;
 	
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
@@ -50,10 +52,10 @@ public class Order implements Serializable{
 	public Order() {
 	}
 
-	public Order(Long id, Date date, Client client, Address deliveryAddress) {
+	public Order(Long id, Date instante, Client client, Address deliveryAddress) {
 		super();
 		this.id = id;
-		this.date = date;
+		this.instante = instante;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
 	}
@@ -74,12 +76,12 @@ public class Order implements Serializable{
 		this.id = id;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getInstante() {
+		return instante;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setInstante(Date instante) {
+		this.instante = instante;
 	}
 
 	public Payment getPayment() {
@@ -138,6 +140,29 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order Number: ");
+		builder.append(getId());
+		builder.append(", Instante ");
+		builder.append(getInstante());
+		builder.append(", Client: ");
+		builder.append(getClient().getName());
+		builder.append(", Payment Status: ");
+		builder.append(getPayment().getStatus().getDescription());
+		builder.append("\nDetails:\n");
+		for(OrderItem oi : items) {
+			builder.append(oi.toString());
+		}
+		builder.append("Amount: ");
+		builder.append(nf.format(getTotalValue()));
+		return builder.toString();
+	}
+	
+	
 
 }
 /*
