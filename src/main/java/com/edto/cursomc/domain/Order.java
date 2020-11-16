@@ -2,6 +2,7 @@ package com.edto.cursomc.domain;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
@@ -144,11 +145,12 @@ public class Order implements Serializable{
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		StringBuilder builder = new StringBuilder();
 		builder.append("Order Number: ");
 		builder.append(getId());
 		builder.append(", Instante ");
-		builder.append(getInstante());
+		builder.append(sdf.format(getInstante()));
 		builder.append(", Client: ");
 		builder.append(getClient().getName());
 		builder.append(", Payment Status: ");
